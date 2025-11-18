@@ -33,6 +33,60 @@ Built with **React 19**, **TypeScript**, **Tailwind**, and the **Google Gemini 2
 
 ---
 
+## Feature Gallery
+
+A visual overview of Graphite-AdGeni’s major tools and creative workflows.
+
+<table>
+  <tr>
+    <td align="center">
+      <strong>Voiceover Script</strong><br>
+      <img src="https://github.com/user-attachments/assets/f27cd76f-d2c6-4398-986b-88d9c7bc89a4" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Text Ad Campaign</strong><br>
+      <img src="https://github.com/user-attachments/assets/9df8e663-a90c-4848-a8db-110ed827a692" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Set Design</strong><br>
+      <img src="https://github.com/user-attachments/assets/f1374f41-f179-42f0-93ba-69bd3f59706d" width="100%" />
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      <strong>Packaging Editor</strong><br>
+      <img src="https://github.com/user-attachments/assets/cb219433-b5cb-4478-a3f2-f92b9ed88ec6" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Package Design</strong><br>
+      <img src="https://github.com/user-attachments/assets/c9e73623-614e-4491-9e9e-9f400dee0285" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Generated Preview</strong><br>
+      <img src="https://github.com/user-attachments/assets/c11f4af4-c7ad-4c6e-8756-c6c99bb045b6" width="100%" />
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      <strong>Composition Workspace</strong><br>
+      <img src="https://github.com/user-attachments/assets/6e87e6ef-6229-4734-983d-ab408dd7edd3" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Brand Identity</strong><br>
+      <img src="https://github.com/user-attachments/assets/1e527bcb-5c97-4dff-b4ee-4ee436fbdda6" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Ad Generation</strong><br>
+      <img src="https://github.com/user-attachments/assets/ef152382-d876-4c3b-a09e-7151dde0704c" width="100%" />
+    </td>
+  </tr>
+</table>
+
+
+
+
 # Key Features
 
 ## 1. Advanced Visual Generation
