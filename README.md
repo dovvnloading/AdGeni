@@ -159,7 +159,8 @@ applied across all generation modules.
 - `gemini-2.5-flash-image`
 - `gemini-2.5-flash`
 - `gemini-2.5-flash-preview-tts`
-
+- `gemini-3-pro-image-preview` [NEW!]
+-  `gemini-3-pro-preview` [NEW!]
 ---
 
 # Installation & Setup
