@@ -33,6 +33,13 @@ Built with **React 19**, **TypeScript**, **Tailwind**, and the **Google Gemini 2
 
 ---
 
+## Update as of 11/20/2025: 
+
+> *Nano Banana Pro and Gemini 3 (preview) are now available in AdGeni!*
+
+
+---
+
 ## Feature Gallery
 
 A visual overview of Graphite-AdGeni’s major tools and creative workflows.
