@@ -1,123 +1,230 @@
-# Graphite-AdGeni
+<p align="center">
+  <a href="https://dovvnloading.github.io/AdGeni/">
+    <strong>▶ Website </strong>
+  </a>
+</p>
 
-![Graphite-AdGeni Banner](https://placehold.co/1200x300/e5e7eb/1f2937?text=Graphite-AdGeni+AI+Advertising+Suite)
+<p align="center">
+  <img src="https://img.shields.io/badge/License-Apache_2.0-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Open%20Source-0f766e?style=for-the-badge" />
+</p>
 
-**© 2025 Matthew Robert Wesney. All Rights Reserved.**
-**Unauthorized use, reproduction, or distribution is prohibited.**
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react" />
+  <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript" />
+  <img src="https://img.shields.io/badge/TailwindCSS-3.x-38bdf8?style=for-the-badge&logo=tailwindcss" />
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite" />
+</p>
 
----
+<p align="center">
+  <img src="https://img.shields.io/badge/Gemini-2.5-4285F4?style=for-the-badge&logo=google" />
+  <img src="https://img.shields.io/badge/Models-Flash%20%7C%20Flash--Image%20%7C%20TTS-1d4ed8?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/GenAI-SDK-16a34a?style=for-the-badge&logo=google" />
+</p>
+
+# Graphite-AdGeni  
 
 ## Overview
 
-Graphite-AdGeni is an enterprise-grade, AI-powered advertising suite designed to streamline the creation of visual, textual, and auditory marketing assets. Built on the latest Google Gemini models, this application provides a unified workspace for creative professionals to generate product photography, packaging concepts, set designs, ad copy, and voiceovers, culminating in a timeline-based video composition tool.
+Graphite-AdGeni is an open-source, AI-powered advertising suite for generating complete marketing assets:  
+product photography, packaging concepts, set designs, ad copy, voiceovers, and export-ready video compositions.
 
-The platform leverages a custom neumorphic design system to provide a tactile, focused user interface, integrating advanced generative capabilities directly into the creative workflow.
+Built with **React 19**, **TypeScript**, **Tailwind**, and the **Google Gemini 2.5** models.
 
-**Lead Developer:** Matthew Robert Wesney
+---
 
-## Key Features
+## Feature Gallery
 
-### 1. Advanced Visual Generation
-*   **Product & Scene Synthesis:** Utilizes `gemini-2.5-flash-image` to generate high-fidelity marketing visuals.
-*   **Smart Mode:** A proprietary two-step generation process that creates separate "driver" images for the scene and the product before compositing them, ensuring higher consistency and control.
-*   **Professional Photography Presets:** Extensive control over virtual camera parameters, including lens types (35mm to Telephoto), shot angles (Eye-level, Dutch angle), focus depth, and lighting setups (Rembrandt, Volumetric, Studio).
-*   **Upscaling:** Integrated image enhancement to increase resolution and clarity of generated assets.
+A visual overview of Graphite-AdGeni’s major tools and creative workflows.
 
-### 2. Specialized Design Modules
-*   **Packaging Design Studio:** Dedicated interface for generating packaging concepts (boxes, bottles, pouches) with specific material textures and label styles.
-*   **Set Design Studio:** Generates photorealistic background environments (infinity cycloramas, industrial lofts, nature scenes) to serve as backdrops for product placement.
+<table>
+  <tr>
+    <td align="center">
+      <strong>Voiceover Script</strong><br>
+      <img src="https://github.com/user-attachments/assets/f27cd76f-d2c6-4398-986b-88d9c7bc89a4" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Text Ad Campaign</strong><br>
+      <img src="https://github.com/user-attachments/assets/9df8e663-a90c-4848-a8db-110ed827a692" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Set Design</strong><br>
+      <img src="https://github.com/user-attachments/assets/f1374f41-f179-42f0-93ba-69bd3f59706d" width="100%" />
+    </td>
+  </tr>
 
-### 3. Brand Identity Hub
-*   **Centralized Guidelines:** Allows users to define core brand attributes including visual style, color palettes, and emotional mood.
-*   **Contextual Injection:** These guidelines can be dynamically referenced across all generation modules to ensure brand consistency across different media types.
+  <tr>
+    <td align="center">
+      <strong>Packaging Editor</strong><br>
+      <img src="https://github.com/user-attachments/assets/cb219433-b5cb-4478-a3f2-f92b9ed88ec6" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Package Design</strong><br>
+      <img src="https://github.com/user-attachments/assets/c9e73623-614e-4491-9e9e-9f400dee0285" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Generated Preview</strong><br>
+      <img src="https://github.com/user-attachments/assets/c11f4af4-c7ad-4c6e-8756-c6c99bb045b6" width="100%" />
+    </td>
+  </tr>
 
-### 4. Ad Editor
-*   **AI-Assisted Inpainting:** A canvas-based editor allowing users to annotate specific regions of an image with brushes, boxes, arrows, or text.
-*   **Generative Editing:** Users can describe changes via text prompts, which the AI applies to the annotated regions while preserving the integrity of the original image.
+  <tr>
+    <td align="center">
+      <strong>Composition Workspace</strong><br>
+      <img src="https://github.com/user-attachments/assets/6e87e6ef-6229-4734-983d-ab408dd7edd3" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Brand Identity</strong><br>
+      <img src="https://github.com/user-attachments/assets/1e527bcb-5c97-4dff-b4ee-4ee436fbdda6" width="100%" />
+    </td>
+    <td align="center">
+      <strong>Ad Generation</strong><br>
+      <img src="https://github.com/user-attachments/assets/ef152382-d876-4c3b-a09e-7151dde0704c" width="100%" />
+    </td>
+  </tr>
+</table>
 
-### 5. Copywriting & Voiceover
-*   **Multi-Platform Text Campaigns:** Generates targeted ad copy (headlines, body text, CTAs) optimized for specific platforms (Facebook, LinkedIn, Google Ads) and campaign goals.
-*   **Script Generation:** AI-assisted scriptwriting based on product descriptions and brand tone.
-*   **Text-to-Speech Synthesis:** Utilizes `gemini-2.5-flash-preview-tts` to generate broadcast-quality voiceovers with selectable voice profiles (e.g., Zephyr, Kore, Fenrir).
 
-### 6. Video Composition & Export
-*   **Timeline Editor:** A non-linear editing timeline to sequence generated images, text overlays, and audio tracks.
-*   **Animation Engine:** Supports keyframe-like animations for static images (Zoom In/Out, Pan Left/Right).
-*   **Format Control:** Configurable output settings for resolution (720p, 1080p) and aspect ratio (16:9, 9:16, 1:1, 4:5).
-*   **Client-Side Rendering:** Exports final compositions to MP4 or WebM formats directly in the browser.
 
-## Technical Architecture
 
-Graphite-AdGeni is a Single Page Application (SPA) built with modern web technologies:
+# Key Features
 
-*   **Frontend Framework:** React 19 (TypeScript)
-*   **Build Tool:** Vite
-*   **Styling:** Tailwind CSS (Custom Neumorphic Design System)
-*   **AI Integration:** Google GenAI SDK (`@google/genai`)
-*   **Canvas Rendering:** Native HTML5 Canvas API for image manipulation and video rendering.
-*   **State Management:** React Hooks and Context API.
+## 1. Advanced Visual Generation
+- Product & Scene synthesis via `gemini-2.5-flash-image`
+- Smart Mode (two-stage composition using driver images)
+- Professional virtual photography controls
+- Built-in upscaling
 
-### Supported Models
-The application requires access to the following Google Gemini models:
-*   `gemini-2.5-flash-image` (Image Generation & Editing)
-*   `gemini-2.5-flash` (Text Generation & Logic)
-*   `gemini-2.5-flash-preview-tts` (Text-to-Speech)
+---
 
-## Installation and Setup
+## 2. Specialized Design Modules
+### Packaging Design Studio
+Generate boxes, bottles, pouches, and label concepts.
 
-### Prerequisites
-*   Node.js (v18 or higher)
-*   npm or yarn
-*   A valid Google Gemini API Key
+### Set Design Studio
+Create photorealistic environments:
+- Cycloramas  
+- Industrial lofts  
+- Nature scenes  
 
-### Local Development
+---
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/dovvnloading/AdGeni.git
-    cd AdGeni
-    ```
+## 3. Brand Identity Hub
+Centralized brand palette, tone, and styling  
+applied across all generation modules.
 
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
+---
 
-3.  **Environment Configuration:**
-    The application expects the API key to be available via `process.env.API_KEY` or selected via the AI Studio window interface.
+## 4. Ad Editor
+- AI-assisted inpainting  
+- Annotation tools  
+- Text-driven region editing  
 
-4.  **Start the development server:**
-    ```bash
-    npm run dev
-    ```
+---
 
-5.  **Build for production:**
-    ```bash
-    npm run build
-    ```
+## 5. Copywriting & Voiceover
+- Multi-platform ad copy  
+- Script generation  
+- High-quality TTS via `gemini-2.5-flash-preview-tts`  
 
-## Usage Guide
+---
 
-### 1. Generating Images
-Navigate to the **Image Generation** tab. Upload a reference product image (optional). Select your desired camera, lighting, and style presets. Enable "Smart Mode" for complex compositions. Click "Generate" to create assets.
+## 6. Video Composition & Export
+- Non-linear timeline  
+- Keyframe-style animations  
+- 720p & 1080p output  
+- Browser-only MP4 / WebM rendering  
 
-### 2. Defining Brand Guidelines
-Navigate to the **Branding** tab. Input your brand's color palette, style description, and mood. In other tabs, select "Use Brand Guidelines" from the dropdown menus to apply these settings automatically.
+---
 
-### 3. Creating a Video Ad
-1.  Generate necessary assets (Images in Image Gen tab, Audio in Voiceover tab, Text in Campaigns tab).
-2.  Navigate to the **Composition** tab.
-3.  Drag and drop assets from the library panel onto the timeline tracks (Video, Audio, Text).
-4.  Adjust timing, duration, and apply animations via the properties panel.
-5.  Select the desired output resolution and aspect ratio.
-6.  Click "Export Video" to render and download the file.
+# Technical Architecture
 
-## License
+- **React 19 SPA**
+- **Vite** build system  
+- **TailwindCSS** custom neumorphic UI  
+- **Google GenAI SDK** integration  
+- **HTML5 Canvas** video compositor  
+- State: React Hooks + Context API  
 
-This project is proprietary software. All rights reserved.
+---
 
-## Contact
+# Supported Models
+- `gemini-2.5-flash-image`
+- `gemini-2.5-flash`
+- `gemini-2.5-flash-preview-tts`
 
-**Matthew Robert Wesney**
-*   GitHub: [https://github.com/dovvnloading](https://github.com/dovvnloading)
-*   Repository: [https://github.com/dovvnloading/AdGeni](https://github.com/dovvnloading/AdGeni)
+---
+
+# Installation & Setup
+
+## Prerequisites
+- Node.js 18+  
+- npm / yarn  
+- A **Gemini API Key** (user-provided)
+
+## Clone
+```bash
+git clone https://github.com/dovvnloading/AdGeni.git
+cd AdGeni
+````
+
+## Install
+
+```bash
+npm install
+```
+
+## Start Dev Server
+
+```bash
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+---
+
+# Usage
+
+## 1. Generating Images
+
+* Open **Image Generation**
+* Configure camera/lighting presets
+* (Optional) Upload reference
+* Enable **Smart Mode**
+* Generate
+
+## 2. Brand Guidelines
+
+Set palette + tone in **Branding** and enable
+**Use Brand Guidelines** in other modules.
+
+## 3. Video Ads
+
+* Generate images, audio, text
+* Drag to timeline
+* Edit timing + animations
+* Export to video
+
+---
+
+# License
+
+This project is licensed under the **Apache License 2.0**.
+
+You **must** retain attribution:
+**© 2025 Matthew Robert Wesney**
+
+See the `LICENSE` file for details.
+
+---
+
+# Credits
+
+* **Matthew Robert Wesney** – creator & lead developer
+* Google Gemini team — generative models
+* React / Vite / Tailwind communities
