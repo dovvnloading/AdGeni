@@ -6,22 +6,10 @@
 import { GoogleGenAI, Modality, GenerateContentResponse, Type } from "@google/genai";
 import { ImageInput, TextCampaign, BrandGuidelines } from "../types";
 
-// Helper to safely get the Env key without crashing if process is undefined
-const getEnvKey = () => {
-    try {
-        if (typeof process !== 'undefined' && process.env) {
-            return process.env.API_KEY;
-        }
-    } catch (e) {
-        return undefined;
-    }
-    return undefined;
-};
-
 // Helper to create a new GoogleGenAI instance. Called before each API call to use the latest key.
 const getAiClient = () => {
-    // Check LocalStorage first (User entered), then Environment Variable (Build time)
-    const apiKey = localStorage.getItem('gemini_api_key') || getEnvKey();
+    // CRITICAL FIX: Only check LocalStorage. Removed process.env to prevent crashes.
+    const apiKey = localStorage.getItem('gemini_api_key');
 
     if (!apiKey) {
         throw new Error("API Key not found. Please set your Gemini API Key in the application settings.");
