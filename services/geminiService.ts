@@ -14,6 +14,10 @@ const getAiClient = () => {
     if (!apiKey) {
         throw new Error("API Key not found. Please set your Gemini API Key in the application settings.");
     }
+    
+    // Debug log to confirm key usage to the user (safely)
+    console.log(`[AdGeni] Using API Key ending in: ...${apiKey.slice(-4)}`);
+    
     return new GoogleGenAI({ apiKey });
 };
 
@@ -95,10 +99,23 @@ const generateGeminiImages = async (ai: any, prompt: string, images: (File | Ima
         throw new Error(errorMessage);
     };
     
-    // Generate images in parallel based on the count parameter
-    const imagePromises = Array(count).fill(0).map(() => generateSingleImage());
-
-    const imageUrls = await Promise.all(imagePromises);
+    // CHANGED: Execute requests sequentially to avoid hitting Rate Limits (429)
+    // Parallel requests (Promise.all) trigger strict quota limits on Flash/Free tiers.
+    const imageUrls: string[] = [];
+    for (let i = 0; i < count; i++) {
+        try {
+            const url = await generateSingleImage();
+            imageUrls.push(url);
+        } catch (e) {
+            console.error(`Error generating image ${i + 1}/${count}:`, e);
+            // If we hit a rate limit, stop trying to generate the rest to prevent spamming
+            if (e instanceof Error && e.message.includes('429')) {
+                throw new Error("Rate limit exceeded (429). Try reducing the number of images or check your billing quota.");
+            }
+            throw e; 
+        }
+    }
+    
     return imageUrls;
 };
 
