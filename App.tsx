@@ -12,13 +12,12 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import NeumorphicCard from './components/GlassCard'; // Renamed GlassCard to NeumorphicCard conceptually
+import NeumorphicCard from './components/GlassCard';
 import NeumorphicButton from './components/NeumorphicButton';
 import LoadingSpinner from './components/LoadingSpinner';
 import Workspace from './components/Workspace';
+import ErrorBoundary from './ErrorBoundary';
 
-// Fix: Moved AIStudio interface inside `declare global` to correctly augment the global scope
-// and resolve the "Subsequent property declarations must have the same type" error.
 declare global {
     interface AIStudio {
         hasSelectedApiKey: () => Promise<boolean>;
@@ -29,7 +28,7 @@ declare global {
     }
 }
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
     const [apiKeyReady, setApiKeyReady] = useState<boolean>(false);
     const [isCheckingKey, setIsCheckingKey] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -40,7 +39,7 @@ const App: React.FC = () => {
             setIsCheckingKey(true);
             setError(null);
             try {
-                // 1. Check LocalStorage (User entered manually)
+                // 1. Check LocalStorage
                 const storedKey = localStorage.getItem('gemini_api_key');
                 if (storedKey && storedKey.length > 0) {
                     setApiKeyReady(true);
@@ -48,7 +47,7 @@ const App: React.FC = () => {
                     return;
                 }
 
-                // 2. Check for Window AI Studio context (Google IDX)
+                // 2. Check for Window AI Studio context
                 if (window.aistudio) {
                     const hasKey = await window.aistudio.hasSelectedApiKey();
                     setApiKeyReady(hasKey);
@@ -56,13 +55,15 @@ const App: React.FC = () => {
                     return;
                 } 
                 
-                // 3. Check for Environment Variable (Local/Dev build)
-                // Use a try-catch block to prevent ReferenceError if 'process' is not defined in the browser
+                // 3. Check for Environment Variable safely
                 let envKey = '';
                 try {
-                   envKey = process.env.API_KEY || '';
+                    // Safe access check to avoid ReferenceError if process is undefined
+                    if (typeof process !== 'undefined' && process.env) {
+                        envKey = process.env.API_KEY || '';
+                    }
                 } catch (e) {
-                   // Ignore ReferenceError
+                   // Ignore env errors
                 }
 
                 if (envKey && envKey.length > 0) {
@@ -72,7 +73,7 @@ const App: React.FC = () => {
                 }
             } catch (e) {
                 console.error("Error checking for API key:", e);
-                setError("Could not verify API key status. Please enter one manually.");
+                setError("Could not verify API key status.");
                 setApiKeyReady(false);
             } finally {
                 setIsCheckingKey(false);
@@ -81,11 +82,8 @@ const App: React.FC = () => {
         checkApiKey();
     }, []);
 
-    // For Google IDX Environment
     const handleSelectKey = async () => {
-        if (!window.aistudio) {
-            return;
-        }
+        if (!window.aistudio) return;
         try {
             await window.aistudio.openSelectKey();
             setApiKeyReady(true);
@@ -96,7 +94,6 @@ const App: React.FC = () => {
         }
     };
 
-    // For Manual Entry (GitHub Pages / No Env)
     const handleSaveManualKey = () => {
         if (!manualKey.trim()) {
             setError("Please enter a valid API key.");
@@ -120,7 +117,7 @@ const App: React.FC = () => {
             <div className="fixed inset-0 bg-gray-200/95 flex items-center justify-center z-50">
                 <NeumorphicCard className="p-8 text-center max-w-md w-full">
                     <h2 className="text-2xl font-bold mb-4 text-gray-800">API Key Required</h2>
-                    <p className="mb-6 text-gray-600">To use AdGeni, you need a Google Gemini API key. Your key is stored locally in your browser and is never sent to our servers.</p>
+                    <p className="mb-6 text-gray-600">To use AdGeni, you need a Google Gemini API key. Your key is stored locally in your browser.</p>
                     
                     {window.aistudio ? (
                         <NeumorphicButton onClick={handleSelectKey} className="w-full mb-4">Select API Key (IDX)</NeumorphicButton>
@@ -144,7 +141,6 @@ const App: React.FC = () => {
                             Get a free Gemini API Key here
                         </a>
                     </div>
-
                     {error && <p className="text-red-500 text-sm mt-4 p-2 bg-red-100 rounded">{error}</p>}
                 </NeumorphicCard>
             </div>
@@ -152,6 +148,14 @@ const App: React.FC = () => {
     }
 
     return <Workspace />;
+};
+
+const App: React.FC = () => {
+    return (
+        <ErrorBoundary>
+            <AppContent />
+        </ErrorBoundary>
+    );
 };
 
 export default App;
