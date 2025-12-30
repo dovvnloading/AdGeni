@@ -3,14 +3,6 @@
  * Unauthorized use, reproduction, or distribution is prohibited.
  */
 
-/**
- * Graphite-AdGeni
- * 
- * Lead and Main Developer: Matthew Robert Wesney
- * GitHub Profile: https://github.com/dovvnloading
- * Project Repository: https://github.com/dovvnloading/AdGeni
- */
-
 import React, { useState, useEffect } from 'react';
 import NeumorphicCard from './components/GlassCard';
 import NeumorphicButton from './components/NeumorphicButton';
@@ -55,22 +47,9 @@ const AppContent: React.FC = () => {
                     return;
                 } 
                 
-                // 3. Check for Environment Variable safely
-                let envKey = '';
-                try {
-                    // Safe access check to avoid ReferenceError if process is undefined
-                    if (typeof process !== 'undefined' && process.env) {
-                        envKey = process.env.API_KEY || '';
-                    }
-                } catch (e) {
-                   // Ignore env errors
-                }
+                // CRITICAL FIX: Removed process.env check entirely to prevent runtime crashes
+                setApiKeyReady(false);
 
-                if (envKey && envKey.length > 0) {
-                    setApiKeyReady(true); 
-                } else {
-                    setApiKeyReady(false);
-                }
             } catch (e) {
                 console.error("Error checking for API key:", e);
                 setError("Could not verify API key status.");
