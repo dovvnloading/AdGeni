@@ -1,5 +1,0 @@
-{
-  "name": "AI Ad Campaign Generator",
-  "description": "An intelligent application that leverages Gemini to generate ad campaign visuals. Users can upload product images to create compelling, AI-powered advertisements.",
-  "requestFramePermissions": []
-}
