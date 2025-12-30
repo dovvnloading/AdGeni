@@ -3,12 +3,19 @@
  * Unauthorized use, reproduction, or distribution is prohibited.
  */
 
+/**
+ * Graphite-AdGeni
+ * 
+ * Lead and Main Developer: Matthew Robert Wesney
+ * GitHub Profile: https://github.com/dovvnloading
+ * Project Repository: https://github.com/dovvnloading/AdGeni
+ */
+
 import React, { useState, useEffect } from 'react';
 import NeumorphicCard from './components/GlassCard';
 import NeumorphicButton from './components/NeumorphicButton';
 import LoadingSpinner from './components/LoadingSpinner';
 import Workspace from './components/Workspace';
-import ErrorBoundary from './ErrorBoundary';
 
 declare global {
     interface AIStudio {
@@ -20,7 +27,7 @@ declare global {
     }
 }
 
-const AppContent: React.FC = () => {
+const App: React.FC = () => {
     const [apiKeyReady, setApiKeyReady] = useState<boolean>(false);
     const [isCheckingKey, setIsCheckingKey] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -39,7 +46,7 @@ const AppContent: React.FC = () => {
                     return;
                 }
 
-                // 2. Check for Window AI Studio context
+                // 2. Check for Window AI Studio context (Google IDX)
                 if (window.aistudio) {
                     const hasKey = await window.aistudio.hasSelectedApiKey();
                     setApiKeyReady(hasKey);
@@ -47,7 +54,7 @@ const AppContent: React.FC = () => {
                     return;
                 } 
                 
-                // If neither exists, user must enter key manually
+                // No key found - force manual entry
                 setApiKeyReady(false);
 
             } catch (e) {
@@ -127,16 +134,6 @@ const AppContent: React.FC = () => {
     }
 
     return <Workspace />;
-};
-
-const App: React.FC = () => {
-    // If ErrorBoundary is missing, just render AppContent directly
-    // return <AppContent />;
-    return (
-        <ErrorBoundary>
-            <AppContent />
-        </ErrorBoundary>
-    );
 };
 
 export default App;
