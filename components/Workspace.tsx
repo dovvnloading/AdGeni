@@ -11,7 +11,7 @@
  * Project Repository: https://github.com/dovvnloading/AdGeni
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImageGenerationTab from './tabs/ImageGenerationTab';
 import PackagingTab from './tabs/PackagingTab';
 import SetDesignTab from './tabs/SetDesignTab';
@@ -65,16 +65,56 @@ const SettingsModal: React.FC<{
     settings: AppSettings; 
     setSettings: (s: AppSettings) => void; 
 }> = ({ onClose, settings, setSettings }) => {
+    const [apiKey, setApiKey] = useState('');
+    const [showKey, setShowKey] = useState(false);
+
+    useEffect(() => {
+        const stored = localStorage.getItem('gemini_api_key');
+        if (stored) setApiKey(stored);
+    }, []);
+
     const handleChange = (key: keyof AppSettings, value: string) => {
         setSettings({ ...settings, [key]: value });
+    };
+
+    const handleKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newVal = e.target.value;
+        setApiKey(newVal);
+        if (newVal.trim()) {
+            localStorage.setItem('gemini_api_key', newVal.trim());
+        } else {
+            localStorage.removeItem('gemini_api_key');
+        }
     };
 
     return (
         <div className="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-50 animate-fade-in" onClick={onClose}>
             <div className="bg-gray-200 p-8 rounded-2xl shadow-[5px_5px_10px_#d1d5db,-5px_-5px_10px_#ffffff] max-w-md w-full" onClick={e => e.stopPropagation()}>
-                <h2 className="text-xl font-bold text-gray-800 mb-6">Model Settings</h2>
+                <h2 className="text-xl font-bold text-gray-800 mb-6">Application Settings</h2>
                 
                 <div className="space-y-6 mb-8">
+                     <div>
+                        <label className="block text-sm font-bold text-gray-600 mb-2">Gemini API Key</label>
+                        <div className="relative">
+                            <input 
+                                type={showKey ? "text" : "password"}
+                                value={apiKey}
+                                onChange={handleKeyChange}
+                                placeholder="Enter API Key"
+                                className="w-full p-3 rounded-xl bg-gray-200 text-gray-700 shadow-[inset_3px_3px_6px_#d1d5db,inset_-3px_-3px_6px_#ffffff] focus:outline-none"
+                            />
+                            <button 
+                                onClick={() => setShowKey(!showKey)}
+                                className="absolute right-3 top-3 text-gray-500 hover:text-gray-700 text-xs font-bold"
+                            >
+                                {showKey ? 'HIDE' : 'SHOW'}
+                            </button>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-2 ml-1">Key is saved in browser storage.</p>
+                    </div>
+
+                    <hr className="border-gray-300" />
+
                     <div>
                         <label className="block text-sm font-bold text-gray-600 mb-2">Text Generation Model</label>
                         <div className="relative">
@@ -317,7 +357,7 @@ const Workspace: React.FC = () => {
                     <ImageGenerationTab 
                         importedProductImage={packagingAsProduct} 
                         onProductImportConsumed={handleProductImportConsumed}
-                        importedSceneImage={setDesignAsScene}
+                        importedSceneImage={setSetDesignAsScene}
                         onSceneImportConsumed={handleSceneImportConsumed}
                         brandGuidelines={brandGuidelines}
                         onEditImage={handleEditImage}
