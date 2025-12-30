@@ -49,14 +49,13 @@ export interface AppSettings {
 }
 
 export const TEXT_MODELS = [
-    { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash' },
-    { id: 'gemini-3-pro-preview', name: 'Gemini 3.0 Pro (Preview)' }
+    { id: 'gemini-1.5-flash', name: 'Gemini 1.5 Flash' },
+    { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro' }
 ];
 
 export const IMAGE_MODELS = [
-    { id: 'gemini-2.5-flash-image', name: 'Nano Banana (Gemini 2.5 Flash Image)' },
-    { id: 'gemini-3-pro-image-preview', name: 'Nano Banana Pro (Gemini 3.0 Pro Image)' },
-    { id: 'imagen-3.0-generate-001', name: 'Imagen 3.0' }
+    { id: 'imagen-3.0-generate-001', name: 'Imagen 3.0' },
+    { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro (Experimental/Text Only)' } 
 ];
 
 // --- Composition Timeline Types ---
