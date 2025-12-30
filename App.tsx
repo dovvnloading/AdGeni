@@ -3,20 +3,13 @@
  * Unauthorized use, reproduction, or distribution is prohibited.
  */
 
-/**
- * Graphite-AdGeni
- * 
- * Lead and Main Developer: Matthew Robert Wesney
- * GitHub Profile: https://github.com/dovvnloading
- * Project Repository: https://github.com/dovvnloading/AdGeni
- */
-
 import React, { useState, useEffect } from 'react';
 import NeumorphicCard from './components/GlassCard';
 import NeumorphicButton from './components/NeumorphicButton';
 import LoadingSpinner from './components/LoadingSpinner';
 import Workspace from './components/Workspace';
 
+// Define global interfaces for AI Studio context
 declare global {
     interface AIStudio {
         hasSelectedApiKey: () => Promise<boolean>;
@@ -38,7 +31,8 @@ const App: React.FC = () => {
             setIsCheckingKey(true);
             setError(null);
             try {
-                // 1. Check LocalStorage
+                // 1. Check Browser Storage (User entered manually)
+                // This is the primary method for GitHub Pages
                 const storedKey = localStorage.getItem('gemini_api_key');
                 if (storedKey && storedKey.length > 0) {
                     setApiKeyReady(true);
@@ -46,7 +40,7 @@ const App: React.FC = () => {
                     return;
                 }
 
-                // 2. Check for Window AI Studio context (Google IDX)
+                // 2. Check for Google IDX Context (if running inside Google IDX)
                 if (window.aistudio) {
                     const hasKey = await window.aistudio.hasSelectedApiKey();
                     setApiKeyReady(hasKey);
@@ -54,7 +48,8 @@ const App: React.FC = () => {
                     return;
                 } 
                 
-                // No key found - force manual entry
+                // 3. Fallback: Request Manual Entry
+                // We DO NOT check process.env here because it crashes the browser.
                 setApiKeyReady(false);
 
             } catch (e) {
