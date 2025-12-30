@@ -47,7 +47,7 @@ const AppContent: React.FC = () => {
                     return;
                 } 
                 
-                // CRITICAL FIX: Removed process.env check entirely to prevent runtime crashes
+                // If neither exists, user must enter key manually
                 setApiKeyReady(false);
 
             } catch (e) {
@@ -130,6 +130,8 @@ const AppContent: React.FC = () => {
 };
 
 const App: React.FC = () => {
+    // If ErrorBoundary is missing, just render AppContent directly
+    // return <AppContent />;
     return (
         <ErrorBoundary>
             <AppContent />
