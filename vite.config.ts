@@ -5,8 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
-      // THIS LINE IS CRITICAL FOR GITHUB PAGES
-      base: '/AdGeni/', 
+      base: '/AdGeni/',  // <--- THIS LINE IS MANDATORY
       server: {
         port: 3000,
         host: '0.0.0.0',
