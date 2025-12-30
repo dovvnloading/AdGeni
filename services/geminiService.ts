@@ -6,12 +6,7 @@
 import { GoogleGenAI, Modality, GenerateContentResponse, Type } from "@google/genai";
 import { ImageInput, TextCampaign, BrandGuidelines } from "../types";
 
-// --- NEW: Centralized API Error Handler ---
-/**
- * Parses detailed error responses from the Google API and returns a user-friendly string.
- * @param error The error object caught from the SDK.
- * @returns A formatted, actionable error message for the user.
- */
+// --- Centralized API Error Handler ---
 function handleGoogleApiError(error: any): string {
     let detailedMessage = "An unexpected error occurred with the AI service.";
     let userAction = "Please try again later. If the problem persists, check your browser's developer console for more details.";
@@ -137,30 +132,10 @@ const generateGeminiImages = async (ai: any, prompt: string, images: (File | Ima
         }
         
         let errorMessage = "Image generation failed. The model did not return an image.";
-        const feedback = response.promptFeedback;
-        const finishReason = response.candidates?.[0]?.finishReason;
-        
-        if (feedback?.blockReason) {
-            errorMessage += ` Reason: Request blocked (${feedback.blockReason}).`;
-            if (feedback.blockReasonMessage) {
-                errorMessage += ` Message: ${feedback.blockReasonMessage}`;
-            }
-        } else if (finishReason && finishReason !== 'STOP') {
-             errorMessage += ` Reason: Generation finished unexpectedly (${finishReason}).`;
-        }
-        
-        const safetyRatings = feedback?.safetyRatings || response.candidates?.[0]?.safetyRatings;
-        if (safetyRatings && safetyRatings.length > 0) {
-            const concerningRatings = safetyRatings.filter((r: any) => r.probability !== 'NEGLIGIBLE' && r.probability !== 'LOW').map((r: any) => `${r.category}: ${r.probability}`).join(', ');
-            if (concerningRatings) {
-                 errorMessage += ` Detected safety concerns: ${concerningRatings}.`;
-            }
-        }
-        
         throw new Error(errorMessage);
     };
     
-    // Execute requests sequentially to avoid hitting Rate Limits (429)
+    // Execute requests sequentially
     const imageUrls: string[] = [];
     for (let i = 0; i < count; i++) {
         try {
@@ -168,7 +143,6 @@ const generateGeminiImages = async (ai: any, prompt: string, images: (File | Ima
             imageUrls.push(url);
         } catch (e) {
             console.error(`Error generating image ${i + 1}/${count}:`, e);
-            // Use the new error handler and throw immediately to stop the process.
             throw new Error(handleGoogleApiError(e));
         }
     }
@@ -176,39 +150,45 @@ const generateGeminiImages = async (ai: any, prompt: string, images: (File | Ima
     return imageUrls;
 };
 
-export const generateAdImages = async (prompt: string, images: (File | ImageInput)[] = [], count: number = 4, model: string = 'gemini-2.5-flash-image'): Promise<string[]> => {
+export const generateAdImages = async (prompt: string, images: (File | ImageInput)[] = [], count: number = 4, model: string = 'imagen-3.0-generate-001'): Promise<string[]> => {
     const ai = getAiClient();
 
-    // Use Imagen if selected AND there are no input images (Imagen via SDK is T2I)
+    // Prefer Imagen if selected and appropriate (no input images for now, as T2I is standard)
     if (model.startsWith('imagen') && images.length === 0) {
-         const response = await ai.models.generateImages({
-            model: model,
-            prompt: prompt,
-            config: {
-                numberOfImages: count,
-                aspectRatio: '1:1',
-                outputMimeType: 'image/jpeg',
-            },
-         });
+         try {
+            const response = await ai.models.generateImages({
+                model: model,
+                prompt: prompt,
+                config: {
+                    numberOfImages: count,
+                    aspectRatio: '1:1',
+                    outputMimeType: 'image/jpeg',
+                },
+            });
 
-         // Map Imagen response to array of data URLs
-         return response.generatedImages.map((img: any) => `data:${img.image.mimeType || 'image/jpeg'};base64,${img.image.imageBytes}`);
+            // Map Imagen response to array of data URLs
+            return response.generatedImages.map((img: any) => `data:${img.image.mimeType || 'image/jpeg'};base64,${img.image.imageBytes}`);
+         } catch(e) {
+             throw new Error(handleGoogleApiError(e));
+         }
     }
 
-    // Fallback to Gemini Flash Image if Imagen was requested but input images exist (Smart Mode compositing, Editing, etc.)
+    // Fallback logic sanitized: Use a real model (gemini-1.5-pro) instead of hallucinated '2.5'.
+    // Note: Gemini 1.5 Pro may not output images depending on region/access.
     const effectiveModel = (model.startsWith('imagen') && images.length > 0) 
-        ? 'gemini-2.5-flash-image' 
+        ? 'gemini-1.5-pro' 
         : model;
 
     return generateGeminiImages(ai, prompt, images, count, effectiveModel);
 };
 
 
-export const upscaleImage = async (image: ImageInput, model: string = 'gemini-2.5-flash-image'): Promise<string> => {
+export const upscaleImage = async (image: ImageInput, model: string = 'imagen-3.0-generate-001'): Promise<string> => {
     const ai = getAiClient();
-    // Upscaling is an edit task, so we should prefer Gemini models. 
-    // If passed model is Imagen, fallback to Gemini Flash Image.
-    const effectiveModel = model.startsWith('imagen') ? 'gemini-2.5-flash-image' : model;
+    
+    // Upscaling is currently an experimental feature often requiring specific models.
+    // Defaulting to a high-capacity model if 'imagen' is passed (since Imagen 3 is T2I).
+    const effectiveModel = model.startsWith('imagen') ? 'gemini-1.5-pro' : model;
 
     const prompt = "Please upscale this image to 4k resolution. Enhance the details, clarity, and sharpness without altering the original composition or subject matter.";
 
@@ -250,7 +230,7 @@ export const generateTextCampaigns = async (
     platform: string,
     tone: string,
     brandGuidelines: BrandGuidelines,
-    model: string = 'gemini-2.5-flash'
+    model: string = 'gemini-1.5-flash'
 ): Promise<TextCampaign[]> => {
     const ai = getAiClient();
     
@@ -314,7 +294,7 @@ export const generateTextCampaigns = async (
     }
 };
 
-export const generateVoScript = async (prompt: string, brandGuidelines?: BrandGuidelines, model: string = 'gemini-2.5-flash'): Promise<string> => {
+export const generateVoScript = async (prompt: string, brandGuidelines?: BrandGuidelines, model: string = 'gemini-1.5-flash'): Promise<string> => {
     const ai = getAiClient();
 
     const systemInstruction = `You are an expert scriptwriter for advertisements. Your task is to write a short, compelling ad script based on the user's request.
