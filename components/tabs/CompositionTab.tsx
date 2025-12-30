@@ -454,32 +454,36 @@ const CompositionTab: React.FC<CompositionTabProps> = ({ images, texts, audios }
                     </div>
                 </div>
 
-                {/* Center: Canvas (FIXED LAYOUT) */}
+                {/* Center: Canvas (SCALABLE LAYOUT FIX) */}
                 <div className="flex-1 bg-gray-300 flex flex-col relative shadow-inner overflow-hidden">
                     
-                    {/* 1. Canvas Area - Expands to fill available space, prevents overflow */}
-                    <div className="flex-1 w-full min-h-0 flex items-center justify-center p-6 overflow-hidden">
-                        <div className="relative w-full h-full flex items-center justify-center">
-                            {/* Inner container scales the canvas while maintaining constraints */}
-                            <div className="bg-gray-200 p-4 rounded-2xl shadow-[inset_5px_5px_10px_#bebebe,inset_-5px_-5px_10px_#ffffff] inline-flex items-center justify-center max-w-full max-h-full">
-                                <canvas 
-                                    ref={canvasRef} 
-                                    width={canvasDims.width} 
-                                    height={canvasDims.height} 
-                                    className="bg-black shadow-2xl object-contain max-w-full max-h-full"
-                                    style={{ 
-                                        width: 'auto', 
-                                        height: 'auto',
-                                        maxWidth: '100%', 
-                                        maxHeight: '100%',
-                                        aspectRatio: aspectRatio.replace(':', '/')
-                                    }} 
-                                />
-                            </div>
+                    {/* 1. Canvas Area - Expands to fill available space */}
+                    <div className="flex-1 w-full min-h-0 flex items-center justify-center p-6">
+                         {/* 
+                             The aspect-ratio container. 
+                             max-w-full / max-h-full forces it to scale down to fit the parent.
+                             aspect-ratio ensures it keeps shape.
+                         */}
+                        <div 
+                            className="bg-gray-200 p-4 rounded-2xl shadow-[inset_5px_5px_10px_#bebebe,inset_-5px_-5px_10px_#ffffff] flex items-center justify-center"
+                            style={{
+                                width: 'auto',
+                                height: 'auto',
+                                maxWidth: '100%',
+                                maxHeight: '100%',
+                                aspectRatio: aspectRatio.replace(':', '/')
+                            }}
+                        >
+                            <canvas 
+                                ref={canvasRef} 
+                                width={canvasDims.width} 
+                                height={canvasDims.height} 
+                                className="bg-black shadow-2xl w-full h-full object-contain rounded"
+                            />
                         </div>
                     </div>
 
-                    {/* 2. Controls Area - Fixed height at bottom, doesn't get squashed */}
+                    {/* 2. Controls Area - Fixed height at bottom */}
                     <div className="flex-shrink-0 h-20 flex items-center justify-center bg-gray-300/50 backdrop-blur-sm z-10">
                         <div className="flex items-center gap-6 bg-gray-200 px-8 py-3 rounded-2xl shadow-[5px_5px_10px_#bebebe,-5px_-5px_10px_#ffffff]">
                              <button onClick={() => { setIsPlaying(false); setCurrentTime(0); }} className="text-gray-600 hover:text-red-500 transition-colors"><StopIcon /></button>
