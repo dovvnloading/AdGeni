@@ -5,51 +5,45 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF--8" />
+    <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Graphite-AdGeni</title>
+    <!-- Tailwind via CDN is fine for now -->
     <script src="https://cdn.tailwindcss.com"></script>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "jszip": "https://esm.sh/jszip@3.10.1",
-    "file-saver": "https://esm.sh/file-saver@2.0.5"
-  }
-}
-</script>
-<style>
-  /* Custom minimalist scrollbar for a more professional look */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #d1d5db; /* gray-300 */
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #9ca3af; /* gray-400 */
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fade-in {
-    animation: fadeIn 0.3s ease-out forwards;
-  }
-</style>
-<link rel="stylesheet" href="/index.css">
-</head>
+    
+    <!-- REMOVED: importmap block (Vite bundles these now) -->
+
+    <style>
+      /* Custom minimalist scrollbar for a more professional look */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #d1d5db; /* gray-300 */
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #9ca3af; /* gray-400 */
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.3s ease-out forwards;
+      }
+    </style>
+    <!-- REMOVED: link to /index.css (Assuming you don't have this file locally. 
+         If you do, import it inside index.tsx instead) -->
+  </head>
   <body class="bg-gray-200 text-gray-800 transition-colors duration-300">
     <div id="root"></div>
+    <!-- Vite handles the path transformation for this script automatically -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>
