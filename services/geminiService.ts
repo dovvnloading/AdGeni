@@ -8,10 +8,13 @@ import { ImageInput, TextCampaign, BrandGuidelines } from "../types";
 
 // Helper to create a new GoogleGenAI instance. Called before each API call to use the latest key.
 const getAiClient = () => {
-    if (!process.env.API_KEY) {
-        throw new Error("API_KEY environment variable not set");
+    // Check LocalStorage first (User entered), then Environment Variable (Build time)
+    const apiKey = localStorage.getItem('gemini_api_key') || process.env.API_KEY;
+
+    if (!apiKey) {
+        throw new Error("API Key not found. Please set your Gemini API Key in the application settings.");
     }
-    return new GoogleGenAI({ apiKey: process.env.API_KEY });
+    return new GoogleGenAI({ apiKey });
 };
 
 // Utility to convert a file to an ImageInput object
