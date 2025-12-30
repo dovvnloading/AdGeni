@@ -6,8 +6,8 @@ export default defineConfig(({ mode }) => {
     // Load env file based on `mode` in the current working directory.
     const env = loadEnv(mode, '.', '');
     return {
-      // CRITICAL: Base URL for GitHub Pages
-      base: '/AdGeni/',
+      // CRITICAL FIX: relative base path handles GitHub Pages subdirectories automatically
+      base: './',
       server: {
         port: 3000,
         host: '0.0.0.0',
@@ -18,6 +18,6 @@ export default defineConfig(({ mode }) => {
           '@': path.resolve(__dirname, '.'),
         }
       },
-      // Note: 'define' block removed to prevent process.env replacement errors during build
+      // Note: No 'define' block. We do not inject process.env to avoid browser crashes.
     };
 });
