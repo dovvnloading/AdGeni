@@ -52,15 +52,23 @@ const App: React.FC = () => {
                 if (window.aistudio) {
                     const hasKey = await window.aistudio.hasSelectedApiKey();
                     setApiKeyReady(hasKey);
+                    setIsCheckingKey(false);
+                    return;
+                } 
+                
+                // 3. Check for Environment Variable (Local/Dev build)
+                // Use a try-catch block to prevent ReferenceError if 'process' is not defined in the browser
+                let envKey = '';
+                try {
+                   envKey = process.env.API_KEY || '';
+                } catch (e) {
+                   // Ignore ReferenceError
+                }
+
+                if (envKey && envKey.length > 0) {
+                    setApiKeyReady(true); 
                 } else {
-                    // 3. Check for Environment Variable (Local/Dev build)
-                    // Note: process.env.API_KEY is replaced at build time. 
-                    // If undefined or empty, we default to false.
-                    if (process.env.API_KEY && process.env.API_KEY.length > 0) {
-                        setApiKeyReady(true); 
-                    } else {
-                        setApiKeyReady(false);
-                    }
+                    setApiKeyReady(false);
                 }
             } catch (e) {
                 console.error("Error checking for API key:", e);
